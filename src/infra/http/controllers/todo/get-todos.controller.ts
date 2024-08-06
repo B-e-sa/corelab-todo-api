@@ -1,13 +1,13 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import { PrismaService } from '../../services/prisma.service';
+import { GetTodosUseCase } from '../../../../domain/use-cases/get-todos';
 
 @Controller('/todos')
 export class GetTodosController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private getTodosUseCase: GetTodosUseCase) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
   async handle() {
-    return await this.prisma.todo.findMany();
+    return await this.getTodosUseCase.execute();
   }
 }

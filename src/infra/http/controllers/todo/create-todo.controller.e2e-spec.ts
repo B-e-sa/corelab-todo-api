@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { Prisma } from '@prisma/client';
-import { AppModule } from '../../../src/app.module';
+import { AppModule } from '../../../app.module';
 import * as request from 'supertest';
 
 describe('Create todo (E2E)', () => {

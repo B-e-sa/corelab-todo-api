@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   HttpCode,
@@ -6,9 +7,9 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-import { PrismaService } from '../../services/prisma.service';
 import { z } from 'zod';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
+import { CreateTodoUseCase } from '../../../../domain/use-cases/create-todo';
 
 const createTodoBodySchema = z.object({
   title: z.string().optional(),
@@ -20,7 +21,7 @@ type CreateTodoBodySchema = z.infer<typeof createTodoBodySchema>;
 
 @Controller('/todos')
 export class CreateTodoController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createTodoUseCase: CreateTodoUseCase) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -28,7 +29,7 @@ export class CreateTodoController {
   async handle(@Body() body: CreateTodoBodySchema) {
     const { title, description, color } = body;
 
-    const createdTodo = await this.prisma.todo.create({
+    const createdTodo = await this.createTodoUseCase.execute({
       data: {
         title,
         description,
@@ -36,6 +37,8 @@ export class CreateTodoController {
       },
     });
 
-    return createdTodo;
+    if (createdTodo) return createdTodo;
+
+    throw new BadRequestException();
   }
 }
