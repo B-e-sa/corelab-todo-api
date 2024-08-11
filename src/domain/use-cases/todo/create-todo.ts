@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { TodoRepository } from '../application/repositories/todo-repository';
+import { TodoRepository } from '../../application/repositories/todo-repository';
 
 @Injectable()
 export class CreateTodoUseCase {

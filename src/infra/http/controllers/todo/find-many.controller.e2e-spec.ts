@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../../../app.module';
 import * as request from 'supertest';
 
-describe('Get todos (E2E)', () => {
+describe('Find many todos (E2E)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {

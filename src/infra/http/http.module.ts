@@ -1,15 +1,36 @@
 import { Module } from '@nestjs/common';
-import { CreateTodoUseCase } from '../../domain/use-cases/create-todo';
-import { DeleteTodoUseCase } from '../../domain/use-cases/delete-todo';
-import { GetTodosUseCase } from '../../domain/use-cases/get-todos';
+import { CreateTodoUseCase } from '../../domain/use-cases/todo/create-todo';
+import { DeleteTodoUseCase } from '../../domain/use-cases/todo/delete-todo';
+import { FindManyTodosUseCase } from '../../domain/use-cases/todo/find-many-todos';
+import { FindTodoByIdUseCase } from '../../domain/use-cases/todo/find-todo-by-id';
+import { UpdateTodoUseCase } from '../../domain/use-cases/todo/update-todo';
 import { DatabaseModule } from '../database/database.module';
 import { CreateTodoController } from './controllers/todo/create-todo.controller';
 import { DeleteTodoController } from './controllers/todo/delete-todo.controller';
-import { GetTodosController } from './controllers/todo/get-todos.controller';
+import { FindManyTodosController } from './controllers/todo/find-many.controller';
+import { FindTodoByIdController } from './controllers/todo/find-todo-by-id.controller';
+import { UpdateTodoController } from './controllers/todo/update-todo.controller';
+import {
+  FindTodosByNameUseCase,
+  FindTodosByTitleUseCase,
+} from 'src/domain/use-cases/todo/find-todos-by-title';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [CreateTodoController, DeleteTodoController, GetTodosController],
-  providers: [CreateTodoUseCase, DeleteTodoUseCase, GetTodosUseCase],
+  controllers: [
+    CreateTodoController,
+    DeleteTodoController,
+    FindManyTodosController,
+    UpdateTodoController,
+    FindTodoByIdController,
+  ],
+  providers: [
+    CreateTodoUseCase,
+    DeleteTodoUseCase,
+    FindManyTodosUseCase,
+    UpdateTodoUseCase,
+    FindTodoByIdUseCase,
+    FindTodosByTitleUseCase,
+  ],
 })
 export class HttpModule {}

@@ -7,6 +7,12 @@ import { TodoRepository } from '../../../../../domain/application/repositories/t
 export class PrismaTodoRepository implements TodoRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findByTitle(title: string): Promise<Todo[]> {
+    return await this.prisma.$queryRaw<
+      Todo[]
+    >`SELECT * FROM Todos WHERE title LIKE '%${title}%'`;
+  }
+
   async findById(id: number): Promise<Todo | undefined> {
     return await this.prisma.todo.findFirst({ where: { id } });
   }
@@ -15,8 +21,24 @@ export class PrismaTodoRepository implements TodoRepository {
     return await this.prisma.todo.create({ data });
   }
 
-  async get(): Promise<Todo[]> {
-    return await this.prisma.todo.findMany();
+  async findMany({
+    skip = 0,
+    take = 10,
+  }: Prisma.TodoFindManyArgs): Promise<Todo[]> {
+    return await this.prisma.todo.findMany({
+      skip,
+      take,
+      orderBy: [{ favorite: 'desc' }, { createdAt: 'desc' }],
+    });
+  }
+
+  async update(todo: Todo): Promise<Todo> {
+    await this.prisma.todo.update({
+      where: { id: todo.id },
+      data: { ...todo },
+    });
+
+    return todo;
   }
 
   async delete(todo: Todo): Promise<Todo | undefined> {

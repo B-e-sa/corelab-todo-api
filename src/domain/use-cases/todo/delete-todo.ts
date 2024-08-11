@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TodoRepository } from '../application/repositories/todo-repository';
+import { TodoRepository } from '../../application/repositories/todo-repository';
 
 @Injectable()
 export class DeleteTodoUseCase {

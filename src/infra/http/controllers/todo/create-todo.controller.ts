@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-import { CreateTodoUseCase } from '../../../../domain/use-cases/create-todo';
+import { CreateTodoUseCase } from '../../../../domain/use-cases/todo/create-todo';
 
 const createTodoBodySchema = z.object({
   title: z.string().optional(),
@@ -37,8 +37,8 @@ export class CreateTodoController {
       },
     });
 
-    if (createdTodo) return createdTodo;
+    if (!createdTodo) throw new BadRequestException();
 
-    throw new BadRequestException();
+    return createdTodo;
   }
 }
