@@ -10,7 +10,7 @@ generator client {
 
 // TODO: Substituir por uma conexão PGSQL no futuro
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

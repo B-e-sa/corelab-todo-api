@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { FindTodosByTitleUseCase } from '../../domain/use-cases/todo/find-todos-by-title';
 import { CreateTodoUseCase } from '../../domain/use-cases/todo/create-todo';
 import { DeleteTodoUseCase } from '../../domain/use-cases/todo/delete-todo';
 import { FindManyTodosUseCase } from '../../domain/use-cases/todo/find-many-todos';
@@ -10,10 +11,7 @@ import { DeleteTodoController } from './controllers/todo/delete-todo.controller'
 import { FindManyTodosController } from './controllers/todo/find-many.controller';
 import { FindTodoByIdController } from './controllers/todo/find-todo-by-id.controller';
 import { UpdateTodoController } from './controllers/todo/update-todo.controller';
-import {
-  FindTodosByNameUseCase,
-  FindTodosByTitleUseCase,
-} from 'src/domain/use-cases/todo/find-todos-by-title';
+import { FindTodosByTitleController } from './controllers/todo/find-todos-by-title.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -23,6 +21,7 @@ import {
     FindManyTodosController,
     UpdateTodoController,
     FindTodoByIdController,
+    FindTodosByTitleController,
   ],
   providers: [
     CreateTodoUseCase,

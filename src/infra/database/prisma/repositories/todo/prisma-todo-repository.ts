@@ -8,9 +8,13 @@ export class PrismaTodoRepository implements TodoRepository {
   constructor(private prisma: PrismaService) {}
 
   async findByTitle(title: string): Promise<Todo[]> {
-    return await this.prisma.$queryRaw<
-      Todo[]
-    >`SELECT * FROM Todos WHERE title LIKE '%${title}%'`;
+    return await this.prisma.todo.findMany({
+      where: {
+        title: {
+          contains: title,
+        },
+      },
+    });
   }
 
   async findById(id: number): Promise<Todo | undefined> {
